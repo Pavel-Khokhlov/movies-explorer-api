@@ -3,7 +3,7 @@ const bcrypt = require('bcryptjs');
 
 const {
   IncorrectEmailPasswordError,
-} = require('../errors/Errors');
+} = require('../utils/Errors');
 
 const UserSchema = new mongoose.Schema({
   name: {

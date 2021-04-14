@@ -1,11 +1,11 @@
 const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 const {
   EmailExistsError,
-} = require('../errors/Errors');
+} = require('../utils/Errors');
 
-const { NODE_ENV, JWT_SECRET } = process.env;
+const { createToken } = require('../utils/Jwt');
+
 const SALT_ROUNDS = 10;
 
 module.exports.createUser = (req, res, next) => {
@@ -36,12 +36,7 @@ module.exports.login = (req, res, next) => {
   const { email, password } = req.body;
   return User.findUserByCredentials(email, password)
     .then((user) => {
-      // create token
-      const token = jwt.sign({ _id: user._id }, NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret', {
-        expiresIn: '7d',
-      });
-      // send token
-      res.send({ token: `Bearer ${token}` });
+      res.send(createToken({ _id: user._id }));
     })
     .catch(next);
 };
