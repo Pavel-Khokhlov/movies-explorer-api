@@ -1,4 +1,9 @@
 const mongoose = require('mongoose');
+const bcrypt = require('bcryptjs');
+
+const {
+  IncorrectEmailPasswordError,
+} = require('../errors/Errors');
 
 const UserSchema = new mongoose.Schema({
   name: {
@@ -19,5 +24,21 @@ const UserSchema = new mongoose.Schema({
     required: [true, 'Password is required'],
   },
 });
+
+UserSchema.statics.findUserByCredentials = function (email, password) {
+  return this.findOne({ email }).select('+password')
+    .then((user) => {
+      if (!user) {
+        throw IncorrectEmailPasswordError();
+      }
+      return bcrypt.compare(password, user.password)
+        .then((matched) => {
+          if (!matched) {
+            throw IncorrectEmailPasswordError();
+          }
+          return user;
+        });
+    });
+};
 
 module.exports = mongoose.model('user', UserSchema);
