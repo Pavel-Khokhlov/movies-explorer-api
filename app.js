@@ -3,19 +3,20 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const { celebrate, Joi, errors } = require('celebrate');
+const router = require('./routes/index');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
+
+const { PORT = 3000, DB = 'mongodb://localhost:27017/numberonedb' } = process.env;
 
 const app = express();
 
 // CONNECTION TO MONGO
-mongoose.connect('mongodb://localhost:27017/numberonedb', {
+mongoose.connect(DB, {
   useNewUrlParser: true,
   useCreateIndex: true,
   useFindAndModify: false,
   useUnifiedTopology: true,
 });
-
-const { PORT = 3000 } = process.env;
 
 const {
   createUser,
@@ -57,7 +58,7 @@ app.post('/signin', celebrate({
   }),
 }), login);
 
-app.use(errorLogger); // ERROR LOGGER
+app.use(router);
 
 app.use(errors()); // celebrate errors
 
@@ -76,5 +77,7 @@ app.use((err, req, res, next) => {
   }
   return res.status(err.statusCode).send({ message: err.message });
 });
+
+app.use(errorLogger); // ERROR LOGGER
 
 app.listen(PORT);

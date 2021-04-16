@@ -8,3 +8,5 @@ module.exports.createToken = (userId) => {
   });
   return ({ token: `Bearer ${token}` });
 };
+
+module.exports.verifyToken = (data) => jwt.verify(data, NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret');
