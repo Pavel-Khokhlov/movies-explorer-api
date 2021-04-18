@@ -1,6 +1,7 @@
 const router = require('express').Router();
+const auth = require('../middlewares/auth');
 
-const { validateUserBody, validateLogin } = require('../middlewares/validations');
+const { validateCreateUser, validateUser } = require('../middlewares/validations');
 
 const {
   createUser,
@@ -11,14 +12,16 @@ const {
   PageNotFoundError,
 } = require('../utils/Errors');
 
-const usersRouter = require('./users');
-// const movieRouter = require('./movies');
+const userRouter = require('./users');
+const movieRouter = require('./movies');
 
-router.post('/signup', validateUserBody, createUser);
-router.post('/signin', validateLogin, login);
+router.post('/signup', validateCreateUser, createUser);
+router.post('/signin', validateUser, login);
 
-router.use('/users', usersRouter);
-// router.use('/movies', movieRouter);
+router.use(auth);
+
+router.use('/users', userRouter);
+router.use('/movies', movieRouter);
 router.use((req, res, next) => next(PageNotFoundError()));
 
 module.exports = router;

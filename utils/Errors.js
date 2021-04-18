@@ -18,4 +18,4 @@ module.exports.PageNotFoundError = () => createError(404, 'Страница по
 
 module.exports.EmailExistsError = (email) => createError(409, `Этот адрес ${email} уже зарегистрирован`);
 
-// module.exports.FileNotFoundError = () => createError(500, 'Data file is not found');
+module.exports.FileNotFoundError = () => createError(500, 'Файл не найден!');

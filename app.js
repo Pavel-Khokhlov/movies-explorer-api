@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const { errors } = require('celebrate');
+const { handleError } = require('./middlewares/handleError');
 const routes = require('./routes/index');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 
@@ -31,7 +32,7 @@ const options = {
   credentials: true,
 };
 
-app.use('*', cors(options)); // first!!!
+app.use('*', cors(options)); // FIRST!!!
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -40,24 +41,10 @@ app.use(requestLogger); // REQUEST LOGGER
 
 app.use(routes);
 
-app.use(errors()); // celebrate errors
-
-// Custom server error handler
-app.use((err, req, res, next) => {
-  next(); // последний next
-  if (err.statusCode === undefined) {
-    const { statusCode = 500, message } = err;
-    return res
-      .status(statusCode)
-      .send({
-        message: statusCode === 500
-          ? 'Internal server error!!!'
-          : message,
-      });
-  }
-  return res.status(err.statusCode).send({ message: err.message });
-});
-
 app.use(errorLogger); // ERROR LOGGER
+
+app.use(errors()); // CELEBRATE ERROR
+
+app.use(handleError); // CUSTOM HANDLER ERRORS
 
 app.listen(PORT);
