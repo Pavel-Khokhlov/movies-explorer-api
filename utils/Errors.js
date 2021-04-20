@@ -1,14 +1,10 @@
 const createError = require('http-errors');
 
-// module.exports.AccessDeniedError = () => createError(400, 'Доступ запрещен');
-
-// module.exports.IncorrectUserIdError = () => createError(400, 'Incorrect user`s Id');
-
-// module.exports.IncorrectCardIdError = () => createError(400, 'Incorrect card`s Id');
+module.exports.RequiredAuthError = () => createError(401, 'Требуется авторизация');
 
 module.exports.IncorrectEmailPasswordError = () => createError(401, 'Неверный e-mail или пароль');
 
-module.exports.ForbiddenError = () => createError(403, 'Forbidden');
+module.exports.ForbiddenError = () => createError(403, 'Доступ запрещен');
 
 module.exports.PageNotFoundError = () => createError(404, 'Страница по указанному адресу не существует');
 
