@@ -6,15 +6,13 @@ const createError = require('http-errors');
 
 // module.exports.IncorrectCardIdError = () => createError(400, 'Incorrect card`s Id');
 
-module.exports.IncorrectEmailPasswordError = () => createError(401, 'Incorrect e-mail or password');
+module.exports.IncorrectEmailPasswordError = () => createError(401, 'Неверный e-mail или пароль');
 
-// module.exports.ForbiddenError = () => createError(403, 'Forbidden');
+module.exports.ForbiddenError = () => createError(403, 'Forbidden');
 
 module.exports.PageNotFoundError = () => createError(404, 'Страница по указанному адресу не существует');
 
-// module.exports.UserNotFoundError = () => createError(404, 'User is not found');
-
-// module.exports.CardNotFoundError = () => createError(404, 'Card is not found');
+module.exports.MovieNotFoundError = () => createError(404, 'Фильм не найден');
 
 module.exports.EmailExistsError = (email) => createError(409, `Этот адрес ${email} уже зарегистрирован`);
 

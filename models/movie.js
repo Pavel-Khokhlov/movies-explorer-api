@@ -36,9 +36,11 @@ const MovieSchema = new mongoose.Schema({
   owner: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'user',
+    required: true,
+    select: false,
   },
   movieId: {
-    type: Number,
+    type: String,
     required: [true, 'Необходимо ввести номер'],
   },
   nameRU: {

@@ -1,9 +1,11 @@
 const { celebrate, Joi } = require('celebrate');
 // const ObjectId = require('mongoose').Types;
 
-// module.exports.validateObjectId = celebrate({
-//   params: Joi.ObjectId().
-// })
+module.exports.validateMovieId = celebrate({
+  params: Joi.object().keys({
+    movieId: Joi.string().required(),
+  }),
+});
 
 module.exports.validateCreateUser = celebrate({
   body: Joi.object().keys({
