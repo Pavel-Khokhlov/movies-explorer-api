@@ -2,6 +2,8 @@ const bcrypt = require('bcryptjs');
 const User = require('../models/user');
 const {
   EmailExistsError,
+  RequiredAuthError,
+  UserNotFoundError,
 } = require('../utils/Errors');
 
 const { createToken, verifyToken } = require('../utils/Jwt');
@@ -51,13 +53,13 @@ module.exports.getMyProfile = (req, res, next) => {
     }
   };
   if (!isAuthorized(token)) {
-    return res.status(401).send({ message: 'Требуется авторизация!' });
+    throw next(RequiredAuthError());
   }
   const userId = isAuthorized(token);
   return User.findById(userId._id)
     .then((user) => {
       if (!user) {
-        return res.status(404).send({ message: 'Пользователь не найден!' });
+        throw next(UserNotFoundError());
       }
       return res.status(200).send(user);
     })

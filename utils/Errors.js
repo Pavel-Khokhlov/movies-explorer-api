@@ -8,6 +8,8 @@ module.exports.ForbiddenError = () => createError(403, 'Доступ запре�
 
 module.exports.PageNotFoundError = () => createError(404, 'Страница по указанному адресу не существует');
 
+module.exports.UserNotFoundError = () => createError(404, 'Пользователь не найден');
+
 module.exports.MovieNotFoundError = () => createError(404, 'Фильм не найден');
 
 module.exports.EmailExistsError = (email) => createError(409, `Этот адрес ${email} уже зарегистрирован`);

@@ -11,7 +11,7 @@ module.exports.validateCreateUser = celebrate({
     name: Joi.string().required().min(2)
       .messages({
         'string.empty': 'Поле Имя должно быть заполнено',
-        'string.min': 'Минимальная длина поля Имя - 2 символа',
+        'string.min': 'Минимальная длина Имени - 2 символа',
       }),
     email: Joi.string().required().email()
       .message('Поле E-mail должно быть заполнено валидным адресом')
@@ -20,8 +20,8 @@ module.exports.validateCreateUser = celebrate({
       }),
     password: Joi.string().required().min(8)
       .messages({
-        'string.empty': 'Поле Пароль должно быть заполнено',
-        'string.min': 'Минимальная длина поля Пароль - 8 символов',
+        'string.empty': 'Пароль должн быть заполнен',
+        'string.min': 'Минимальная длина Пароля - 8 символов',
       }),
   }),
 });
@@ -35,8 +35,8 @@ module.exports.validateUser = celebrate({
       }),
     password: Joi.string().required().min(8)
       .messages({
-        'string.empty': 'Поле Пароль должно быть заполнено',
-        'string.min': 'Минимальная длина поля Пароль - 8 символов',
+        'string.empty': 'Пароль должн быть заполнен',
+        'string.min': 'Минимальная длина Пароля - 8 символов',
       }),
   }),
 });
@@ -46,7 +46,7 @@ module.exports.validateUserUpdate = celebrate({
     name: Joi.string().required().min(2)
       .messages({
         'string.empty': 'Поле Имя должно быть заполнено',
-        'string.min': 'Минимальная длина поля Имя - 2 символа',
+        'string.min': 'Минимальная длина Имени - 2 символа',
       }),
     email: Joi.string().required().email()
       .message('Поле E-mail должно быть заполнено валидным адресом')
