@@ -11,26 +11,22 @@ const { createToken, verifyToken } = require('../utils/Jwt');
 const SALT_ROUNDS = 10;
 
 module.exports.createUser = (req, res, next) => {
-  const {
-    name,
-    email,
-    password,
-  } = req.body;
-  User
-    .findOne({ email })
+  const { name, email, password } = req.body;
+  User.findOne({ email })
     .then((user) => {
       if (user) {
         throw EmailExistsError(email);
       }
-      return bcrypt
-        .hash(password, SALT_ROUNDS);
+      return bcrypt.hash(password, SALT_ROUNDS);
     })
     .then((hash) => User.create({
       name,
       email,
       password: hash,
     }))
-    .then((user) => res.status(201).send({ _id: user._id, email: user.email }))
+    .then((user) => {
+      res.send(createToken({ _id: user._id }));
+    })
     .catch(next);
 };
 
@@ -78,6 +74,8 @@ module.exports.updateUser = (req, res, next) => {
       upsert: false,
     },
   )
-    .then((user) => res.status(200).send(user))
+    .then((user) => {
+      res.status(200).send(user);
+    })
     .catch(next);
 };

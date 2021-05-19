@@ -14,9 +14,10 @@ module.exports.getMyMovies = (req, res, next) => {
     .populate('owner')
     .then((movies) => {
       if (!movies) {
-        throw next(FileNotFoundError());
+        // throw next(FileNotFoundError());
+        return res.status(200).send({ message: 'У вас нет сохраненных фильмов' });
       }
-      res.status(200).send(movies);
+      return res.status(200).send(movies);
     })
     .catch(next);
 };
