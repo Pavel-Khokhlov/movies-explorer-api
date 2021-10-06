@@ -15,12 +15,13 @@ const {
 const app = express();
 
 // CONNECTION TO MONGO
-mongoose.connect(DB_MONGO, {
-  useNewUrlParser: true,
-  useCreateIndex: true,
-  useFindAndModify: false,
-  useUnifiedTopology: true,
-});
+mongoose.connect(
+  DB_MONGO,
+  async (err) => {
+    if (err) throw err;
+    console.log('connected to MOVIES');
+  },
+);
 
 app.use('*', cors(Options)); // FIRST!!!
 

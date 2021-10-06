@@ -25,7 +25,13 @@ module.exports.createUser = (req, res, next) => {
       password: hash,
     }))
     .then((user) => {
-      res.send(createToken({ _id: user._id }));
+      const token = createToken({ _id: user._id });
+      res.status(200).send({
+        name: user.name,
+        email: user.email,
+        _id: user._id,
+        token: token.token,
+      });
     })
     .catch(next);
 };
@@ -34,7 +40,13 @@ module.exports.login = (req, res, next) => {
   const { email, password } = req.body;
   return User.findUserByCredentials(email, password)
     .then((user) => {
-      res.send(createToken({ _id: user._id }));
+      const token = createToken({ _id: user._id });
+      res.status(200).send({
+        name: user.name,
+        email: user.email,
+        _id: user._id,
+        token: token.token,
+      });
     })
     .catch(next);
 };
@@ -57,7 +69,11 @@ module.exports.getMyProfile = (req, res, next) => {
       if (!user) {
         throw next(UserNotFoundError());
       }
-      return res.status(200).send(user);
+      return res.status(200).send({
+        name: user.name,
+        email: user.email,
+        _id: user._id,
+      });
     })
     .catch(next);
 };
