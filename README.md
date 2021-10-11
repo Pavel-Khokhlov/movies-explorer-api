@@ -1,3 +1,3 @@
-# NEW MOVIES PROJECT - Backend
+# RESUME MOVIES PROJECT - Backend
 
-* [Link to the server](https://api.pavel-khokhlov.nomoredomains.monster)
+* [Link to the frontend](https://github.com/Pavel-Khokhlov/resume-frontend)
