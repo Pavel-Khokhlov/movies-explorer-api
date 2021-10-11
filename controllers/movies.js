@@ -76,6 +76,7 @@ module.exports.deleteMovie = (req, res, next) => {
       throw next(MovieNotFoundError());
     })
     .then((data) => {
+      console.log(data);
       if (String(data.owner) !== owner) {
         return next(ForbiddenError());
       }
